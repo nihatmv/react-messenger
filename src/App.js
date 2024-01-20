@@ -1,23 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [divs, setDivs] = useState([]);
+  const [comment, setComment] = useState("");
+
+  const DynamicDivComponent = ({ content }) => {
+    return <div className="comment-section">{content}</div>;
+  };
+
+  const handleButtonClick = () => {
+    setDivs((prevDivs) => [
+      ...prevDivs,
+      <DynamicDivComponent key={prevDivs.length} content={comment} />,
+    ]);
+    setComment("");
+  };
+
+  const handleTextareaChange = (e) => {
+    setComment(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="messenger">
+      <div className="messenger-top-bar">
+        <div>
+          <img src="avatar-image.jpeg" alt="image" className="profile-image" />
+          <textarea
+            name="textarea"
+            id="textarea"
+            cols="35"
+            rows="10"
+            placeholder="Write a comment"
+            className="textarea"
+            value={comment}
+            onChange={handleTextareaChange}
+          ></textarea>
+        </div>
+        <div className="buttons">
+          <button className="reset-button">Reset</button>
+          <button className="comment-button" onClick={handleButtonClick}>
+            Comment
+          </button>
+        </div>
+      </div>
+
+      <div className="messenger-body">
+        {divs.map((div, index) => (
+          <div key={index}>{div}</div>
+        ))}
+      </div>
     </div>
   );
 }
