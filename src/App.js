@@ -19,6 +19,7 @@ function App() {
 
   const handleTextareaChange = (e) => {
     setComment(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
@@ -42,6 +43,7 @@ function App() {
           <button className="comment-button" onClick={handleButtonClick}>
             Comment
           </button>
+          {/* <button onClick={console.log(e.target.value)}>click it</button> */}
         </div>
       </div>
 
